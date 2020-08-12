@@ -1,0 +1,25 @@
+{
+  "name": "navedex",
+  "version": "1.0.0",
+  "description": "Desafio back-end navers",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon src/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Fábio Guimarães",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "2.0.3"
+  },
+  "dependencies": {
+    "bcryptjs": "2.4.3",
+    "body-parser": "1.19.0",
+    "express": "4.17.1",
+    "express-validator": "6.6.0",
+    "jsonwebtoken": "8.5.1",
+    "knex": "0.21.2",
+    "moment": "2.24.0",
+    "pg": "8.3.0"
+  }
+}
