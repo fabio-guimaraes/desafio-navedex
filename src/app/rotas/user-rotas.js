@@ -14,11 +14,11 @@ module.exports = (app) => {
     const rotasUsers = UsersController.rotas();
 
     // signup - cria um novo usuário
-    app.route(rotasUsers.signup)
-        .post(regrasValidacaoUser(), validaUser, usersController.signup);
+    app.post(rotasUsers.signup,
+        regrasValidacaoUser(), validaUser, usersController.signup);
 
     // login - login de usuário
-    app.route(rotasUsers.login)
-        .get(regrasValidacaoUser(), validaUser, usersController.login);
+    app.get(rotasUsers.login,
+        regrasValidacaoUser(), validaUser, usersController.login);
 
 };

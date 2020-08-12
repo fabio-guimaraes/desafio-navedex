@@ -1,5 +1,5 @@
 # Navedex API
----
+
 ## Descrição
 API desenvolvida utilizando node.js para atender o desafio proposto pela empresa nave.rs
 [https://github.com/naveteam/back-end-challenge](https://github.com/naveteam/back-end-challenge)
@@ -12,12 +12,12 @@ Para executar e testar a API são necessários alguns softwares instalados e con
 - Nodejs v10.22.0 (npm/npx v.6.14.6)
 - Insomnia Core-2020.3.3
 - Postgresql 10.13-2
-- Visual Studio Code 1.47.3 *(opcional, editor utilizado para codificar)*
+- Visual Studio Code 1.47.3 _(opcional, editor utilizado para codificar)_
 
 ### Configurando o ambiente
 
 #### Criando o banco de dados
-A API foi criada utilizando o *Postgres* e o primeiro passo é a criação de um banco de dados chamado **navedex**. Dentro da pasta `docs/scripts` no repositório existe um arquivo chamado *create-dabase.sql* que realiza esse processo, basta copiar e colar o texto no editor SQL e executar.
+A API foi criada utilizando o _Postgres_ e o primeiro passo é a criação de um banco de dados chamado **navedex**. Dentro da pasta `docs/scripts` no repositório existe um arquivo chamado _create-dabase.sql_ que realiza esse processo, basta copiar e colar o texto no editor SQL e executar.
 ```
 CREATE DATABASE nevedex
     WITH
@@ -30,7 +30,7 @@ COMMENT ON DATABASE nevedex
 ```
 
 #### Configurando a conexão
-Na pasta raíz do projeto existe um arquivo chamado *knexfile.js* que contém as configurações de acesso ao banco de dados e devem ser alteradas, na seção *conection* caso as informações de conexão sejam diferentes.
+Na pasta _raíz_ do projeto existe um arquivo chamado _knexfile.js_ que contém as configurações de acesso ao banco de dados e devem ser alteradas, na seção _conection_ caso as informações de conexão sejam diferentes.
 ```
 module.exports = {
   development: {
@@ -59,7 +59,7 @@ module.exports = {
 Executar o comando `npm install` dentro da pasta aonde encontram-se os arquivos da API. Isso fará com que todas as dependências sejam baixadas e instaladas. Esse processo pode ser um pouco demorado dependendo da velocidade da conexão com a internet.
 
 #### Criando as tabelas
-As tabelas devem ser criadas através do comando `npx knex migrate:latest`, que executará pelo knex as *migrations*, criando todas as tabelas e relacionamentos.
+As tabelas devem ser criadas através do comando `npx knex migrate:latest`, que executará pelo knex as _migrations_, criando todas as tabelas e relacionamentos.
 
 #### Inserindo dados de teste (opcional)
 Para incluir dados iniciais de teste basta executar o comando `npx knex seed:run`. Se preferir pode pular essa etapa e criar todos os registros durante a execução da API.&nbsp;
@@ -69,7 +69,7 @@ Se incluir os dados pela API pode utilizar um dos usuários abaixo. A senha padr
 - teste2@outlook.com
 
 ### Execução
-Para executar a API execute `npm start`. A execução será realizada através do *nodemon* que irá monitorar a aplicação na porta 3000.
+Para executar a API execute `npm start`. A execução será realizada através do _nodemon_ que irá monitorar a aplicação na porta **3000**.
 ```
 > navedex@1.0.0 start C:\dev\navers\navedex
 > nodemon src/server.js
@@ -83,19 +83,54 @@ Servidor em execução
 ```
 
 ### Testando a API
-Para realizar os testes será necessário a utilização de um software para executar as requisições. Durante o desenvolvimento foi utilizado o [insomnia](https://insomnia.rest/) e dentro da pasta `/docs/requests-insomnia` existe o arquivo *Insomnia_2020-08-11.json* com todas as rotas configuradas. Esse arquivo pode ser importado para o [insomnia](https://insomnia.rest/).
+Para realizar os testes será necessário a utilização de um software para executar as requisições. Durante o desenvolvimento foi utilizado o [insomnia](https://insomnia.rest/) e dentro da pasta `/docs/requests-insomnia` existe o arquivo _Insomnia_2020-08-11.json_ com todas as rotas configuradas. Esse arquivo pode ser importado para o [insomnia](https://insomnia.rest/).
 
 #### Executando as requisições
 A partir do [insomnia](https://insomnia.rest/) e seguindo as informações do roteiro do desafio \([https://github.com/naveteam/back-end-challenge](https://github.com/naveteam/back-end-challenge)) será possível realizar todos os testes.
-Algumas considerações sobre as requisições/testes:
-- O token JWT gerado tem validade de um(1) dia. Se necessário esse valor pode ser alterado no arquivo `src/config.auth.json` alterando o valor da chave *expires*
+
+#### Rotas
+As rotas configuradas na API foram as seguintes:
+
+##### Insomnia
+```
+url_base : http://localhost:3000
+```
+
+##### Projetos
+```
+GET   /projetos/index
+GET   /projetos/index/:titulo?
+GET   /projetos/:id
+POST  /projetos
+PUT   /projetos/:id
+DELTE /projetos/:id
+```
+Para testar a rota ***index*** utilizando a opção de filtro deve-se colocar o nome do projeto a ser filtrado diretamente depois do endereço da rota. Por exemplo, para se listar um projeto com o título "Teste Projeto" deve-se colocar `url_base/projetos/index/Teste Projeto`
+
+##### Usuários
+```
+GET   /users/login
+POST  /users/signup
+```
+
+##### Navers
+```
+GET   /navers/index
+GET   /navers/index/:filtro?
+GET   /navers/:id
+POST  /navers
+PUT   /navers/:id
+DELTE /navers/:id
+```
+Como no caso dos Navers existem três(3) opções de filtro, deve-se colocar depois do endereço da rota o par ***campo=valor***, onde _campo_ identifica qual o campo a ser usado no filtro (nome, cargo ou admissão) e _valor_ informa qual o valor a ser usado na consulta. O exemplo a seguir lista os Navers que foram admitidos em 01/08/2020 `url_base/navers/index/admissao=2020-08-01`
+
+#### Observações para os testes
+Algumas observações sobre as requisições/testes:
+- O token JWT gerado tem validade de um(1) dia. Se necessário esse valor pode ser alterado no arquivo `src/config.auth.json` alterando o valor da chave _expires_
 - O token deve ser passado no cabeçalho (header) das requisições na propriedade `x-access-token`
-- Para testar a roda *index* utilizando a opção de filtro
-  - Projetos
-    - Colocar o nome do projeto a ser filtrado diretamente depois do endereço da rota. Por exemplo, para se listar um projeto com o título "Teste Projeto" deve-se colocar `url_base/projetos/index/Teste Projeto`
-  - Navers
-    - Como no caso dos Navers existem três(3) opções de filtro, deve-se colocar depois do endereço da rota o par *campo=valor*, onde *campo* identifica qual o campo a ser usado no filtro (nome, cargo ou admissão) e *valor* informa qual o valor a ser usado na consulta. O exemplo a seguir lista os Navers que foram admitidos em 01/08/2020 `url_base/navers/index/admissao=2020-08-01`
+- Foi configurado no [insomnia](https://insomnia.rest/) uma _url_base_ apontando para `http://localhost:3000`
 - Diversas validações são realizadas antes de processar a requisição na base de dados e as mensagens de erro retornadas devem ser suficientes para o usuário identificar o problema e corrigir a solicitação
+  - Por se tratar de um desafio (teste), em alguns casos o uso de um retorno com código `400 Bad Request` e mensagens mais complexas foi adotado de forma proposital, como por exemplo em requisições de listagem onde não haveria retorno de nenhuma informação, ao invés de utilizar um retorno `204 No Content`
 
 ## Considerações
 As bibliotecas utilizadas \(listadas abaixo) foram salvas no arquivo *package.json* com a versão exata para evitar qualquer erro de incompatibilidade com outras versões, sejam mais antigas ou mais novas.
@@ -115,9 +150,13 @@ Por esses fatos talvez alguns trechos de código não estejam utilizando as melh
 - [https://code.visualstudio.com/](https://code.visualstudio.com/)
 - [https://express-validator.github.io/docs/](https://express-validator.github.io/docs/)
 - [https://github.com/chriso/validator.js](https://github.com/chriso/validator.js)
+- [https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Status](https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Status)
 
 ### Artigos e vídeos
 - https://www.youtube.com/watch?v=U7GjS3FuSkA
+- https://www.youtube.com/watch?v=KKTX1l3sZGk&t=659s
+- https://www.youtube.com/watch?v=BN_8bCfVp88
+- https://www.youtube.com/watch?v=Zwdv9RllPqU
 - https://www.notion.so/Masterclass-Knex-45d9705a634a4c2b80ac1599585163a6
 - https://www.luiztools.com.br/post/como-usar-nodejs-mysql/
 - https://www.luiztools.com.br/post/autenticacao-json-web-token-jwt-em-nodejs/

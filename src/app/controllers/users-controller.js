@@ -11,8 +11,8 @@ class UsersController {
     // método da classe que contém as rotas a serem utilizadas
     static rotas() {
         return {
-            signup: '/signup',
-            login: '/login'
+            signup: '/users/signup',
+            login: '/users/login'
         }
     };
 
